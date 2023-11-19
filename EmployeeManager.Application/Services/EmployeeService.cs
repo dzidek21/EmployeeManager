@@ -27,9 +27,18 @@ namespace EmployeeManager.Application.Services
 
         public async Task AddNewEmployee(EmployeeVm newEmployee)
         {
+            EmployeeVm employeeVm = new EmployeeVm();
+            employeeVm = newEmployee;
+            
             var emp = _mapper.Map<EmployeeVm, Employee>(newEmployee);
             await _employeeRepo.AddNewEmployee(emp);
             
+        }
+
+        public async Task<EmployeeVm> GetEmployeeById(int id)
+        {
+            var employee =await _employeeRepo.GetEmployeeById(id);
+            return _mapper.Map<Employee, EmployeeVm>(employee);
         }
 
         public async Task <List<EmployeeVm>> GetAllEmployees()

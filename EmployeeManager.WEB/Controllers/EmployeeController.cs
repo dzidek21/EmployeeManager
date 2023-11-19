@@ -8,32 +8,38 @@ namespace EmployeeManager.WEB.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeService _employeeSrevice;
-        private readonly IProjectService _projectSrevice;
-        public EmployeeController(IEmployeeService employeeSrevice, IProjectService projectSrevice)
+        private readonly IEmployeeService _employeeService;
+        private readonly IProjectService _projectService;
+        private readonly IProjectHistoryService _projectHistoryService;
+
+
+        public EmployeeController(IEmployeeService employeeService, IProjectService projectService, IProjectHistoryService projectHistoryService)
         {
-            _employeeSrevice = employeeSrevice;
-            _projectSrevice = projectSrevice;
+            _employeeService = employeeService;
+            _projectService = projectService;
+            _projectHistoryService = projectHistoryService;
         }
 
         // GET: EmployeeController
         public async Task <ActionResult> Index()
         {
-            var employees = await _employeeSrevice.GetAllEmployees();
+            var employees = await _employeeService.GetAllEmployees();
             return View(employees);
         }
 
         // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
+        public async Task< ActionResult> Details(int id)
         {
-            // ReSharper disable once Mvc.ViewNotResolved
-            return View();
+            var projectHistroy = await _projectHistoryService.GetAllProjectsForEmployee(id);
+            var employee = await _employeeService.GetEmployeeById(id);
+            employee.ProjectsHistory = projectHistroy;
+            return View(employee);
         }
 
         // GET: EmployeeController/Create
         public async Task <ActionResult> Create()
         {
-            var projects =await _projectSrevice.GetAllProjects();
+            var projects =await _projectService.GetAllProjects();
             ViewBag.Projects = new SelectList(projects, "Id","ProjectName");
             return View();
         }
@@ -45,7 +51,7 @@ namespace EmployeeManager.WEB.Controllers
         {
             try
             {
-                await _employeeSrevice.AddNewEmployee(newEmployeeVm);
+                await _employeeService.AddNewEmployee(newEmployeeVm);
                 return RedirectToAction(nameof(Index));
             }
             catch

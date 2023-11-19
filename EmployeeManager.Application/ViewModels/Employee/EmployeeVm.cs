@@ -10,6 +10,6 @@ namespace EmployeeManager.Application.ViewModels.Employee
         public string? LastName { get; set; }
         public int CurrentProjectId { get; set; }
         public ProjectVm? CurrentProject { get; set; }
-        public ICollection<ProjectHistoryVm>? ProjectsHistory { get; set; }
+        public List<ProjectHistoryVm> ProjectsHistory { get; set; } = new List<ProjectHistoryVm>();
     }
 }

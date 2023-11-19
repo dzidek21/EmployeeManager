@@ -11,5 +11,6 @@ namespace EmployeeManager.Application.Interfaces
     {
         Task<List<EmployeeVm>> GetAllEmployees();
         Task AddNewEmployee(EmployeeVm newEmployee);
+        Task <EmployeeVm> GetEmployeeById(int id);
     }
 }

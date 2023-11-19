@@ -11,5 +11,6 @@ namespace EmployeeManager.Domain.Interfaces
     {
         Task<List<Employee>> GetAllEmployees();
         Task AddNewEmployee(Employee newEmployee);
+        Task<Employee> GetEmployeeById(int id);
     }
 }

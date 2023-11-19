@@ -26,10 +26,15 @@ namespace EmployeeManager.Infrastructure.Repositories
                 FirstName =newEmployee.FirstName,
                 LastName=newEmployee.LastName,
                 CurrentProjectId=newEmployee.CurrentProjectId,
-                CurrentProject=newEmployee.CurrentProject
+                CurrentProject=newEmployee.CurrentProject,
             };
             await _context.Employees.AddAsync(newEmp);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            return await _context.Employees.FirstOrDefaultAsync(x=>x.Id==id);
         }
 
         public async Task<List<Employee>> GetAllEmployees()

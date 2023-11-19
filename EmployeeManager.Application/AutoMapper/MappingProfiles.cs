@@ -21,7 +21,7 @@ namespace EmployeeManager.Application.AutoMapper
             CreateMap<Project, ProjectVm>().
                 ForMember(x=>x.Employees,opt=>opt.MapFrom(x=>x.Employees)).
                 ReverseMap();
-            CreateMap<EmployeeProjectHistory, ProjectHistoryVm>();
+            CreateMap<EmployeeProjectHistory, ProjectHistoryVm>().ReverseMap();
         }
     }
 }
