@@ -26,6 +26,7 @@ namespace EmployeeManager.WEB.Controllers
         // GET: EmployeeController/Details/5
         public ActionResult Details(int id)
         {
+            // ReSharper disable once Mvc.ViewNotResolved
             return View();
         }
 
@@ -44,14 +45,7 @@ namespace EmployeeManager.WEB.Controllers
         {
             try
             {
-                var emp = new EmployeeVm()
-                {
-                    FirstName = newEmployeeVm.FirstName,
-                    LastName = newEmployeeVm.LastName,
-                    CurrentProjectId = newEmployeeVm.CurrentProjectId,
-                    CurrentProject = await _projectSrevice.GetProjectById(newEmployeeVm.CurrentProjectId)
-                };
-                await _employeeSrevice.AddNewEmployee(emp);
+                await _employeeSrevice.AddNewEmployee(newEmployeeVm);
                 return RedirectToAction(nameof(Index));
             }
             catch
